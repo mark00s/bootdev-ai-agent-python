@@ -6,13 +6,20 @@ from google.genai import types
 
 
 def main():
-    args = sys.argv[1:]
+    # flags
+    flag_verbose = "--verbose" in sys.argv
+    args = [arg for arg in sys.argv[1:] if not arg.startswith("--")]
 
     if not args:
         print("AI Code Assistant")
-        print('\nUsage: python main.py "your prompt here"')
+        print("\nUsage: python main.py <prompt> <flags>")
         print('Example: python main.py "How do I build a calculator app?"')
+        print("\n   --verbose: Make app more informative")
+        print(
+            '\n           example: python main.py "How do I build a calculator app?" --verbose'
+        )
         sys.exit(1)
+
     user_prompt = " ".join(args)
 
     load_dotenv()
@@ -31,8 +38,10 @@ def main():
     )
 
     print(res.text)
-    print(f"Prompt tokens: {res.usage_metadata.prompt_token_count}")
-    print(f"Response tokens: {res.usage_metadata.candidates_token_count}")
+    if flag_verbose:
+        print(f"User prompt: {user_prompt}")
+        print(f"Prompt tokens: {res.usage_metadata.prompt_token_count}")
+        print(f"Response tokens: {res.usage_metadata.candidates_token_count}")
 
 
 if __name__ == "__main__":
