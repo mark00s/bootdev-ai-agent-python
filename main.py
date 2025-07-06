@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from google import genai
 from google.genai import types
 
+from functions.generate_content import generate_content
+
 
 def main():
     load_dotenv()
@@ -33,20 +35,6 @@ def main():
     ]
 
     generate_content(client, messages, flag_verbose)
-
-
-def generate_content(client, messages, verbose, model="gemini-2.0-flash-001"):
-    res = client.models.generate_content(
-        model=model,
-        contents=messages,
-    )
-
-    if verbose:
-        print(f"Prompt tokens: {res.usage_metadata.prompt_token_count}")
-        print(f"Response tokens: {res.usage_metadata.candidates_token_count}")
-        print("##############################################################")
-
-    print(res.text)
 
 
 if __name__ == "__main__":
