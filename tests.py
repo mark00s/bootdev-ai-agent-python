@@ -1,18 +1,12 @@
-from functions.get_file_content import get_file_content
+from functions.write_file import write_file
 
 
 def tests():
-    result = get_file_content("calculator", "main.py")
-    print("\nResult for 'main.py' file:")
-    print(result)
+    print(write_file("calculator", "lorem.txt", "wait, this isn't lorem ipsum"))
 
-    result = get_file_content("calculator", "pkg/calculator.py")
-    print("\nResult for 'pkg/calculator.py' file:")
-    print(result)
+    print(write_file("calculator", "pkg/morelorem.txt", "lorem ipsum dolor sit amet"))
 
-    result = get_file_content("calculator", "/bin/cat")
-    print("\nResult for '/bin/cat' file:")
-    print(result)
+    print(write_file("calculator", "/tmp/temp.txt", "this should not be allowed"))
 
 
 if __name__ == "__main__":
